@@ -1,0 +1,85 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Git for Archived Data",
+    "description": "Git for Archived Data Configuration Schema",
+    "type": "object",
+    "properties": {
+        "$schema": {},
+        "config": {
+            "$ref": "#/definitions/Config"
+        },
+        "items": {
+            "$ref": "#/definitions/ItemList"
+        }
+    },
+    "required": ["config", "items"],
+    "additionalProperties": false,
+    "definitions": {
+        "Config": {
+            "type": "object",
+            "description": "Project configuration",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+        },
+        "ItemList": {
+            "type": "array",
+            "description": "Archives description",
+            "items": {
+                "$ref": "#/definitions/Item"
+            }
+        },
+        "Item": {
+            "type": "object",
+            "description": "Configuration for each archive",
+            "properties": {
+                "archive": {
+                    "$ref": "#/definitions/ItemArchive"
+                },
+                "raw": {
+                    "$ref": "#/definitions/ItemRaw"
+                }
+            },
+            "required": ["archive", "raw"],
+            "additionalProperties": false
+        },
+        "ItemArchive": {
+            "type": "object",
+            "description": "Archive information",
+            "properties": {
+                "path": {
+                    "type": "string"
+                },
+                "format": {
+                    "type": "string",
+                    "enum": ["zip"],
+                    "default": "zip"
+                },
+                "watching": {
+                    "type": "boolean",
+                    "description": "Is watch mode enabled for the archive",
+                    "default": true
+                }
+            },
+            "required": ["path"],
+            "additionalProperties": false
+        },
+        "ItemRaw": {
+            "type": "object",
+            "description": "Raw data (unpacked from the archive) information",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "Path to the directory with raw data"
+                },
+                "applyPrettier": {
+                    "type": "boolean",
+                    "description": "Apply prettier for the directory (NOT AVAILABLE)",
+                    "default": true
+                }
+            },
+            "required": ["path"],
+            "additionalProperties": false
+        }
+    }
+}
