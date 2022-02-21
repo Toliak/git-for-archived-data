@@ -52,7 +52,7 @@
                 },
                 "format": {
                     "type": "string",
-                    "enum": ["zip"],
+                    "enum": ["zip", "tar"],
                     "default": "zip"
                 },
                 "watching": {
