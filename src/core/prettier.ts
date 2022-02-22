@@ -1,6 +1,9 @@
 import * as prettier from 'prettier';
 import fs from 'fs';
+import { glob } from 'glob';
+import path from 'path';
 
+class PrettierError extends Error {}
 
 export async function formatRawData(
     directoryPath: string,
@@ -8,12 +11,39 @@ export async function formatRawData(
 ): Promise<void> {
     const options = await prettier.resolveConfig(prettierConfigPath);
     if (!options) {
-        // TODO: console log and correct exception
-        throw new Error();
+        console.error(
+            'Cannot find prettier config file' +
+                '(Check .prettierrc.json file in the root of the project)',
+        );
+        throw new PrettierError();
     }
 
-    for (const filePath of fs.readdirSync(directoryPath)) {
-        console.log(filePath);
+    for (const filePath of glob.sync('**', {
+        cwd: directoryPath,
+    })) {
+        const fullPath = path.join(directoryPath, filePath);
+        if (fs.lstatSync(fullPath).isDirectory()) {
+            continue;
+        }
+
+        const info = await prettier.getFileInfo(fullPath, {
+            resolveConfig: true,
+        });
+        if (info.ignored) {
+            console.log(`Skipping ignored ${fullPath}`);
+            continue;
+        }
+        if (!info.inferredParser) {
+            console.log(`No parser found for ${fullPath}`);
+            continue;
+        }
+
+        const source = fs.readFileSync(fullPath, { encoding: 'utf8' });
+        const result = prettier.format(source, {
+            ...options,
+            filepath: fullPath,
+        });
+        fs.writeFileSync(fullPath, result, { encoding: 'utf8' });
+        console.log(`Prettified file ${fullPath}`);
     }
-    // prettier.format(directoryPath, options);
 }

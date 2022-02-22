@@ -3,7 +3,11 @@ import * as fs from 'fs';
 import { GitForArchivedData, Item } from '../../../src/config/types';
 import { readConfig } from '../../../src/config';
 import { formatRawData, unpackArchive } from '../../../src/core/';
-import { getDefaultConfigPath, targetDirectoryFilesLengthTest, targetFileCheckTest } from '../mixins';
+import {
+    getDefaultConfigPath,
+    targetDirectoryFilesLengthTest,
+    targetFileCheckTest,
+} from '../mixins';
 import exp from 'constants';
 
 interface TestEnvContext {
@@ -45,7 +49,10 @@ describe('Case MS Office Word file unpack and pack', () => {
 
     targetFileCheckTest(path.join(rawDirectoryPath, 'word'), true);
     targetFileCheckTest(path.join(rawDirectoryPath, '_rels'), true);
-    targetFileCheckTest(path.join(rawDirectoryPath, '[Content_Types].xml'), true);
+    targetFileCheckTest(
+        path.join(rawDirectoryPath, '[Content_Types].xml'),
+        true,
+    );
     targetFileCheckTest(path.join(rawDirectoryPath, 'docProps'), true);
 
     it('Format raw data', async () => {

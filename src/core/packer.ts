@@ -16,7 +16,7 @@ export async function unpackArchive(
         unzipPipe.on('error', err => {
             console.error(
                 '\x1b[31m⛊\x1b[0m ' +
-                '\x1b[31mError happen while unpacking\x1b[0m',
+                    '\x1b[31mError happen while unpacking\x1b[0m',
             );
             reject(err);
         });

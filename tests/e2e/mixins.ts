@@ -8,7 +8,7 @@ export function getDefaultConfigPath(directory: string) {
 export function targetFileCheckTest(filepath: string, isExists: boolean): void {
     it(
         `The target file "${filepath}"` +
-        `${isExists ? 'exists' : 'does not exist'}`,
+            `${isExists ? 'exists' : 'does not exist'}`,
         async () => {
             const result = fs.existsSync(filepath);
             if (isExists) {
