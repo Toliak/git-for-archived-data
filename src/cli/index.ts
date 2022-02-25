@@ -1,11 +1,11 @@
-import {packArchive, unpackArchive} from "../core";
-import {readConfig} from "../config";
+import { packArchive, unpackArchive } from '../core';
+import { readConfig } from '../config';
 
 export async function parseArguments(args: string[]): Promise<void> {
-    console.log(args)
+    console.log(args);
     if (args.length != 1) {
         console.error('Expected exactly one argument');
-        process.exit(1)
+        process.exit(1);
         return;
     }
 
@@ -13,10 +13,7 @@ export async function parseArguments(args: string[]): Promise<void> {
         const config = readConfig('git-for-archived-data.json');
         const promises: Promise<void>[] = [];
         for (const item of config.items) {
-            promises.push(unpackArchive(
-                item.archive.path,
-                item.raw.path,
-            ))
+            promises.push(unpackArchive(item.archive.path, item.raw.path));
         }
 
         for (const promise of promises) {
@@ -34,11 +31,13 @@ export async function parseArguments(args: string[]): Promise<void> {
         const config = readConfig('git-for-archived-data.json');
         const promises: Promise<void>[] = [];
         for (const item of config.items) {
-            promises.push(packArchive(
-                item.raw.path,
-                item.archive.path,
-                item.archive.format as never
-            ))
+            promises.push(
+                packArchive(
+                    item.raw.path,
+                    item.archive.path,
+                    item.archive.format as never,
+                ),
+            );
         }
 
         for (const promise of promises) {
@@ -49,12 +48,12 @@ export async function parseArguments(args: string[]): Promise<void> {
 
     // TODO
     if (args[0] == '--watch') {
-        console.error('TODO')
-        process.exit(1)
+        console.error('TODO');
+        process.exit(1);
         return;
     }
 
     console.error(`Unknown argument: ${args[0]}`);
-    process.exit(1)
+    process.exit(1);
     return;
 }

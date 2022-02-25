@@ -1,12 +1,14 @@
 import * as prettier from 'prettier';
 import fs from 'fs';
-import {glob} from 'glob';
+import { glob } from 'glob';
 import path from 'path';
 
-class PrettierError extends Error {
-}
+class PrettierError extends Error {}
 
-async function formatRawDataFile(fullPath: string, options: prettier.Options): Promise<void> {
+async function formatRawDataFile(
+    fullPath: string,
+    options: prettier.Options,
+): Promise<void> {
     const info = await prettier.getFileInfo(fullPath, {
         resolveConfig: true,
     });
@@ -19,12 +21,12 @@ async function formatRawDataFile(fullPath: string, options: prettier.Options): P
         return;
     }
 
-    const source = fs.readFileSync(fullPath, {encoding: 'utf8'});
+    const source = fs.readFileSync(fullPath, { encoding: 'utf8' });
     const result = prettier.format(source, {
         ...options,
         filepath: fullPath,
     });
-    fs.writeFileSync(fullPath, result, {encoding: 'utf8'});
+    fs.writeFileSync(fullPath, result, { encoding: 'utf8' });
     console.log(`Prettified file ${fullPath}`);
 }
 
@@ -36,7 +38,7 @@ export async function formatRawData(
     if (!options) {
         console.error(
             'Cannot find prettier config file' +
-            '(Check .prettierrc.json file in the root of the project)',
+                '(Check .prettierrc.json file in the root of the project)',
         );
         throw new PrettierError();
     }

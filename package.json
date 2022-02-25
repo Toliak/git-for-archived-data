@@ -4,6 +4,7 @@
     "description": "Utility that automates archive packing and unpacking for tracking the content of the archive",
     "main": "dist/index.js",
     "scripts": {
+        "pretest": "npm run convert-schema",
         "test": "jest .",
         "prebuild": "npm run convert-schema",
         "build": "tsc --build",

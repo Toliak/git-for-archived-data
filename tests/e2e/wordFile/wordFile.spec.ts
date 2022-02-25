@@ -1,7 +1,7 @@
 import * as path from 'path';
-import {GitForArchivedData} from '../../../src/config/types';
-import {readConfig} from '../../../src/config';
-import {formatRawData, packArchive, unpackArchive} from '../../../src/core/';
+import { GitForArchivedData } from '../../../src/config/types';
+import { readConfig } from '../../../src/config';
+import { formatRawData, packArchive, unpackArchive } from '../../../src/core/';
 import {
     getDefaultConfigPath,
     removeDirectoryIfExists,
@@ -59,11 +59,26 @@ describe('Case MS Office Word file unpack and pack', () => {
     targetFileCheckTest(path.join(rawDirectoryPath, 'docProps'), true);
 
     it('Format raw data', async () => {
-        await formatRawData(path.join(rawDirectoryPath, 'word'), prettierConfigPath);
-        await formatRawData(path.join(rawDirectoryPath, '_rels'), prettierConfigPath);
-        await formatRawData(path.join(rawDirectoryPath, 'docProps/app.xml'), prettierConfigPath);
-        await formatRawData(path.join(rawDirectoryPath, 'docProps/core.xml'), prettierConfigPath);
-        await formatRawData(path.join(rawDirectoryPath, '[Content_Types].xml'), prettierConfigPath);
+        await formatRawData(
+            path.join(rawDirectoryPath, 'word'),
+            prettierConfigPath,
+        );
+        await formatRawData(
+            path.join(rawDirectoryPath, '_rels'),
+            prettierConfigPath,
+        );
+        await formatRawData(
+            path.join(rawDirectoryPath, 'docProps/app.xml'),
+            prettierConfigPath,
+        );
+        await formatRawData(
+            path.join(rawDirectoryPath, 'docProps/core.xml'),
+            prettierConfigPath,
+        );
+        await formatRawData(
+            path.join(rawDirectoryPath, '[Content_Types].xml'),
+            prettierConfigPath,
+        );
     });
 
     it('Pack word file', async () => {
