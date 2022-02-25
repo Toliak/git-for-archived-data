@@ -1,0 +1,17 @@
+{
+    "$schema": "../../../git-for-archived-data.schema.json",
+    "config": {},
+    "items": [
+        {
+            "archive": {
+                "path": "SampleDocument.docx",
+                "watching": false,
+                "format": "zip"
+            },
+            "raw": {
+                "path": "SampleDocumentResult",
+                "applyPrettier": true
+            }
+        }
+    ]
+}

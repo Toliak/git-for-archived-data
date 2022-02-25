@@ -1,14 +1,13 @@
 import * as path from 'path';
-import * as fs from 'fs';
-import { GitForArchivedData, Item } from '../../../src/config/types';
-import { readConfig } from '../../../src/config';
-import { formatRawData, unpackArchive } from '../../../src/core/';
+import {GitForArchivedData} from '../../../src/config/types';
+import {readConfig} from '../../../src/config';
+import {formatRawData, packArchive, unpackArchive} from '../../../src/core/';
 import {
     getDefaultConfigPath,
+    removeDirectoryIfExists,
     targetDirectoryFilesLengthTest,
     targetFileCheckTest,
 } from '../mixins';
-import exp from 'constants';
 
 interface TestEnvContext {
     config: GitForArchivedData | null;
@@ -24,10 +23,13 @@ describe('Case MS Office Word file unpack and pack', () => {
     const prettierConfigPath = '.prettierrc.json';
 
     const rawDirectoryPath = path.join(__dirname, 'SampleDocumentResult');
+    const resultArchivePath = path.join(__dirname, 'SampleDocumentResult.docx');
 
     const context: TestEnvContext = {
         config: null,
     };
+
+    removeDirectoryIfExists(rawDirectoryPath);
 
     it('ReadConfig', async () => {
         context.config = readConfig(configPath);
@@ -36,6 +38,7 @@ describe('Case MS Office Word file unpack and pack', () => {
 
     it('Unpack word file', async () => {
         expect(context.config).not.toBeNull();
+        // eslint-disable-file @typescript-eslint/no-non-null-assertion
         const item = context.config!.items[0]!;
 
         await unpackArchive(
@@ -56,6 +59,23 @@ describe('Case MS Office Word file unpack and pack', () => {
     targetFileCheckTest(path.join(rawDirectoryPath, 'docProps'), true);
 
     it('Format raw data', async () => {
-        await formatRawData(rawDirectoryPath, prettierConfigPath);
+        await formatRawData(path.join(rawDirectoryPath, 'word'), prettierConfigPath);
+        await formatRawData(path.join(rawDirectoryPath, '_rels'), prettierConfigPath);
+        await formatRawData(path.join(rawDirectoryPath, 'docProps/app.xml'), prettierConfigPath);
+        await formatRawData(path.join(rawDirectoryPath, 'docProps/core.xml'), prettierConfigPath);
+        await formatRawData(path.join(rawDirectoryPath, '[Content_Types].xml'), prettierConfigPath);
     });
+
+    it('Pack word file', async () => {
+        expect(context.config).not.toBeNull();
+        const item = context.config!.items[0]!;
+
+        await packArchive(
+            path.join(__dirname, item.raw.path),
+            resultArchivePath,
+            'zip',
+        );
+    });
+
+    targetFileCheckTest(resultArchivePath, true);
 });
