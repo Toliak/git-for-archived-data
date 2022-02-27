@@ -59,26 +59,7 @@ describe('Case MS Office Word file unpack and pack', () => {
     targetFileCheckTest(path.join(rawDirectoryPath, 'docProps'), true);
 
     it('Format raw data', async () => {
-        await formatRawData(
-            path.join(rawDirectoryPath, 'word'),
-            prettierConfigPath,
-        );
-        await formatRawData(
-            path.join(rawDirectoryPath, '_rels'),
-            prettierConfigPath,
-        );
-        await formatRawData(
-            path.join(rawDirectoryPath, 'docProps/app.xml'),
-            prettierConfigPath,
-        );
-        await formatRawData(
-            path.join(rawDirectoryPath, 'docProps/core.xml'),
-            prettierConfigPath,
-        );
-        await formatRawData(
-            path.join(rawDirectoryPath, '[Content_Types].xml'),
-            prettierConfigPath,
-        );
+        await formatRawData(rawDirectoryPath, prettierConfigPath);
     });
 
     it('Pack word file', async () => {

@@ -7,5 +7,6 @@
     "printWidth": 80,
     "semi": true,
     "xmlWhitespaceSensitivity": "ignore",
-    "xmlSelfClosingSpace": false
+    "xmlSelfClosingSpace": false,
+    "xmlExpandSelfClosingTags": true
 }

@@ -33,5 +33,7 @@ export function targetDirectoryFilesLengthTest(
 }
 
 export function removeDirectoryIfExists(dirpath: string) {
-    fs.rmSync(dirpath, { recursive: true });
+    if (fs.existsSync(dirpath)) {
+        fs.rmSync(dirpath, { recursive: true });
+    }
 }

@@ -1,4 +1,4 @@
-import { packArchive, unpackArchive } from '../core';
+import { createWatcher, packArchive, unpackArchive } from '../core';
 import { readConfig } from '../config';
 
 export async function parseArguments(args: string[]): Promise<void> {
@@ -46,10 +46,9 @@ export async function parseArguments(args: string[]): Promise<void> {
         return;
     }
 
-    // TODO
     if (args[0] == '--watch') {
-        console.error('TODO');
-        process.exit(1);
+        const config = readConfig('git-for-archived-data.json');
+        createWatcher(config);
         return;
     }
 
