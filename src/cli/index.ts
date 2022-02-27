@@ -1,5 +1,11 @@
-import { createWatcher, packArchive, unpackArchive } from '../core';
+import {
+    createWatcher,
+    formatRawData,
+    packArchive,
+    unpackArchive,
+} from '../core';
 import { readConfig } from '../config';
+import inquirer from 'inquirer';
 
 export async function parseArguments(args: string[]): Promise<void> {
     console.log(args);
@@ -13,7 +19,17 @@ export async function parseArguments(args: string[]): Promise<void> {
         const config = readConfig('git-for-archived-data.json');
         const promises: Promise<void>[] = [];
         for (const item of config.items) {
-            promises.push(unpackArchive(item.archive.path, item.raw.path));
+            promises.push(
+                (async () => {
+                    await unpackArchive(item.archive.path, item.raw.path);
+                    console.log('asdasd', item.raw.applyPrettier);
+                    if (item.raw.applyPrettier) {
+                        await formatRawData(item.raw.path, '.');
+                    } else {
+                        console.log('Skipped prettier');
+                    }
+                })(),
+            );
         }
 
         for (const promise of promises) {
@@ -28,6 +44,23 @@ export async function parseArguments(args: string[]): Promise<void> {
      */
 
     if (args[0] == '--pack') {
+        const questions = [
+            {
+                type: 'boolean',
+                name: 'confirm',
+                message: 'Confirm? [y/n]',
+            },
+        ];
+
+        const data = (await inquirer.prompt(questions)) as {
+            confirm: boolean;
+        };
+
+        if (!data.confirm) {
+            console.error('No confirm. Exiting');
+            process.exit(1);
+        }
+
         const config = readConfig('git-for-archived-data.json');
         const promises: Promise<void>[] = [];
         for (const item of config.items) {

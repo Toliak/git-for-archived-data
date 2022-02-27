@@ -32,6 +32,11 @@ export async function packArchive(
     archivePath: string,
     format: Format,
 ): Promise<void> {
+    if (!fs.existsSync(rawPath)) {
+        console.error('No raw path error');
+        return;
+    }
+
     const archive = archiver(format, { zlib: { level: 9 } });
     const stream = fs.createWriteStream(archivePath);
 

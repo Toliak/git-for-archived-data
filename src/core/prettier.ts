@@ -53,11 +53,12 @@ export async function formatRawData(
     for (const filePath of glob.sync('**', {
         cwd: directoryPath,
     })) {
-        if (fs.lstatSync(fullPath).isDirectory()) {
+        const fullFilePath = path.join(directoryPath, filePath);
+        if (fs.lstatSync(fullFilePath).isDirectory()) {
             continue;
         }
 
-        promises.push(formatRawDataFile(filePath, options));
+        promises.push(formatRawDataFile(fullFilePath, options));
     }
 
     for (const promise of promises) {
