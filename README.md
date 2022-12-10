@@ -46,7 +46,7 @@ The archive contains:
 
 As you can see, there is a lot of text files that can be controlled via git.
 
-My project **Git for an Archived Data** provides utility
+The project **Git for an Archived Data** provides utility
 that automates archive packing and unpacking for
 tracking the content of the archive.
 
@@ -74,7 +74,26 @@ tracking the content of the archive.
 }
 ```
 
-2. Create the `.prettierrc.json` file
+2. Create the `.prettierrc.json` file. Content example below
+
+```json
+{
+    "$schema": "https://json.schemastore.org/prettierrc",
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "printWidth": 80,
+    "semi": true,
+
+    "xmlWhitespaceSensitivity": "strict",
+    "xmlSelfClosingSpace": true,
+    "xmlExpandSelfClosingTags": true
+}
+```
+
+Be careful with `xml*` flag set. It can break the MS Office file is set up wrongly.
+`xmlWhitespaceSensitivity` must be `strict`.
 
 ## Commands
 
@@ -90,12 +109,10 @@ Pack (from the directory into the archived format)
 npx git-for-archived-data --pack
 ```
 
-# Repository content
-
 # Use-Cases
 
 -   Git for Proteus
 -   Git for MS Office:
-    -   Git for Word
-    -   Git for Excel
-    -   Git for PowerPoint
+    -   Git for MS Word
+    -   Git for MS Excel
+    -   Git for MS PowerPoint
