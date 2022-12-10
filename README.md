@@ -53,6 +53,7 @@ tracking the content of the archive.
 # How to use
 
 1. Create the configuration file. Example below.
+
 ```json
 {
     "$schema": "https://raw.githubusercontent.com/Toliak/git-for-archived-data/develop/git-for-archived-data.schema.json",
@@ -78,11 +79,13 @@ tracking the content of the archive.
 ## Commands
 
 Unpack (from the archived format into the directory)
+
 ```bash
 npx git-for-archived-data --unpack
 ```
 
 Pack (from the directory into the archived format)
+
 ```bash
 npx git-for-archived-data --pack
 ```

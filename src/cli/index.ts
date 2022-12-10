@@ -38,11 +38,6 @@ export async function parseArguments(args: string[]): Promise<void> {
         return;
     }
 
-    /**
-     * Prettier is not available yet.
-     * See https://github.com/prettier/plugin-xml/pull/412
-     */
-
     if (args[0] == '--pack') {
         const questions = [
             {

@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "scripts": {
         "pretest": "npm run convert-schema",
-        "test": "jest .",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "prebuild": "npm run convert-schema",
         "build": "tsc --build",
         "dev": "npm run build && gfad",
@@ -15,7 +15,8 @@
         "convert-schema": "node utils/convert-schema.js"
     },
     "bin": {
-        "gfad": "./dist/index.js"
+        "gfad": "./dist/index.js",
+        "git-for-archived-data": "./dist/index.js"
     },
     "files": [
         "dist/**",
@@ -36,7 +37,7 @@
         "eslint": "^7.32.0",
         "jest": "^27.5.1",
         "json-schema-to-typescript": "^10.1.5",
-        "prettier": "^2.5.1",
+        "prettier": "=3.0.0-alpha.3",
         "ts-jest": "^27.1.3",
         "ts-node": "^10.5.0",
         "typescript": "^4.5.5"
@@ -49,7 +50,7 @@
         "js-yaml": "^4.1.0",
         "json5": "^2.0.0",
         "jsonschema": "^1.4.0",
-        "prettier-plugin-xml-fork": "^1.2.2",
+        "prettier-plugin-xml-msword": "=2.2.0-1",
         "unzipper": "^0.10.11"
     }
 }

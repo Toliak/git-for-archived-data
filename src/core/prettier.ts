@@ -22,7 +22,7 @@ async function formatRawDataFile(
     }
 
     const source = fs.readFileSync(fullPath, { encoding: 'utf8' });
-    const result = prettier.format(source, {
+    const result = await prettier.format(source, {
         ...options,
         filepath: fullPath,
     });
