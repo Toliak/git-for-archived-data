@@ -16,12 +16,15 @@ export async function unpackArchive(
         unzipPipe.on('error', err => {
             console.error(
                 '\x1b[31m⛊\x1b[0m ' +
-                    '\x1b[31mError happen while unpacking\x1b[0m',
+                    '\x1b[31mError happen while unpacking into \x1b[34m${rawPath}\x1b[0m',
             );
             reject(err);
         });
+
         unzipPipe.on('close', () => {
-            console.log('\x1b[32m♦\x1b[0m Unpacking complete\x1b[0m');
+            console.log(
+                `\x1b[32m♦\x1b[0m Unpacking into \x1b[34m${rawPath}\x1b[0m complete\x1b[0m`,
+            );
             resolve();
         });
     });

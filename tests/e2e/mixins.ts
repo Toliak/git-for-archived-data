@@ -5,7 +5,11 @@ export function getDefaultConfigPath(directory: string) {
     return path.join(directory, 'git-for-archived-data.json');
 }
 
-export function targetFileCheckTest(filepath: string, isExists: boolean): void {
+export function targetFileCheckTest(
+    filepath: string,
+    isExists?: boolean,
+    saveSnapshot?: boolean,
+): void {
     it(
         `The target file "${filepath}"` +
             `${isExists ? 'exists' : 'does not exist'}`,
@@ -13,6 +17,10 @@ export function targetFileCheckTest(filepath: string, isExists: boolean): void {
             const result = fs.existsSync(filepath);
             if (isExists) {
                 expect(result).toBeTruthy();
+
+                if (saveSnapshot && !fs.lstatSync(filepath).isDirectory()) {
+                    expect(fs.readFileSync(filepath, 'utf8')).toMatchSnapshot();
+                }
             } else {
                 expect(result).toBeFalsy();
             }

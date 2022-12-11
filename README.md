@@ -1,4 +1,4 @@
-# Git for an Archived Data
+# Git for an Archived Data (GFAD)
 
 A lot of enterprise apps uses archived file as a project.
 Those archives may contain raw data in different text formats.
@@ -52,62 +52,23 @@ tracking the content of the archive.
 
 # How to use
 
-1. Create the configuration file. Example below.
+1. Run `npx git-archive-data -a init` to initialize the project.
 
-```json
-{
-    "$schema": "https://raw.githubusercontent.com/Toliak/git-for-archived-data/develop/git-for-archived-data.schema.json",
-    "config": {},
-    "items": [
-        {
-            "archive": {
-                "format": "zip",
-                "path": "my_document.docx",
-                "watching": true
-            },
-            "raw": {
-                "path": "my_document",
-                "applyPrettier": true
-            }
-        }
-    ]
-}
-```
+This step creates two files:
+- `git-for-archived-data.json` - the project configuration file;
+- `.prettierrc` - the configuration file for the code formatter.
 
-2. Create the `.prettierrc.json` file. Content example below
-
-```json
-{
-    "$schema": "https://json.schemastore.org/prettierrc",
-    "arrowParens": "avoid",
-    "singleQuote": true,
-    "trailingComma": "all",
-    "tabWidth": 4,
-    "printWidth": 80,
-    "semi": true,
-
-    "xmlWhitespaceSensitivity": "strict",
-    "xmlSelfClosingSpace": true,
-    "xmlExpandSelfClosingTags": true
-}
-```
-
-Be careful with `xml*` flag set. It can break the MS Office file is set up wrongly.
+Be careful with `xml*` flags in the `.prettierrc`.
+It can break the MS Office file if set up wrongly.
 `xmlWhitespaceSensitivity` must be `strict`.
 
-## Commands
+2. Edit `git-for-archived-data.json` and configure archive files
 
-Unpack (from the archived format into the directory)
+3. Run `npx git-archive-data -a unpack` to unpack the configured archives
 
-```bash
-npx git-for-archived-data --unpack
-```
+4. Run `npx git-archive-data -a pack` to pack the archives back
 
-Pack (from the directory into the archived format)
-
-```bash
-npx git-for-archived-data --pack
-```
+Also, watch mode `npx git-archive-data -a watch` can be used to automatically unpack and pack the archives.
 
 # Use-Cases
 

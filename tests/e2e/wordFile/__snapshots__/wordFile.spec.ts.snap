@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Case MS Office Word file unpack and pack The target file "C:\\Users\\Toliak\\WebstormProjects\\git-for-archived-data\\tests\\e2e\\wordFile\\SampleDocumentResult\\[Content_Types].xml"exists 1`] = `
+"<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types
+    xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
+><Default
+        Extension="rels"
+        ContentType="application/vnd.openxmlformats-package.relationships+xml"></Default><Default
+        Extension="xml"
+        ContentType="application/xml"></Default><Override
+        PartName="/word/document.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"></Override><Override
+        PartName="/word/styles.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"></Override><Override
+        PartName="/word/settings.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"></Override><Override
+        PartName="/word/webSettings.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml"></Override><Override
+        PartName="/word/fontTable.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"></Override><Override
+        PartName="/word/theme/theme1.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.theme+xml"></Override><Override
+        PartName="/docProps/core.xml"
+        ContentType="application/vnd.openxmlformats-package.core-properties+xml"></Override><Override
+        PartName="/docProps/app.xml"
+        ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"></Override></Types>
+"
+`;
+
+exports[`Case MS Office Word file unpack and pack The target file "C:\\Users\\Toliak\\WebstormProjects\\git-for-archived-data\\tests\\e2e\\wordFile\\SampleDocumentResult\\word\\_rels\\document.xml.rels"exists 1`] = `
+"<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships
+    xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
+><Relationship
+        Id="rId3"
+        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings"
+        Target="webSettings.xml"></Relationship><Relationship
+        Id="rId2"
+        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings"
+        Target="settings.xml"></Relationship><Relationship
+        Id="rId1"
+        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
+        Target="styles.xml"></Relationship><Relationship
+        Id="rId5"
+        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
+        Target="theme/theme1.xml"></Relationship><Relationship
+        Id="rId4"
+        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable"
+        Target="fontTable.xml"></Relationship></Relationships>
+"
+`;
+
+exports[`Case MS Office Word file unpack and pack The target file "C:\\Users\\Toliak\\WebstormProjects\\git-for-archived-data\\tests\\e2e\\wordFile\\SampleDocumentResult\\word\\document.xml"exists 1`] = `
+"<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document
+    xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"
+    xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex"
+    xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+    xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"
+    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+    xmlns:w10="urn:schemas-microsoft-com:office:word"
+    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"
+    xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml"
+    xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex"
+    xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup"
+    xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk"
+    xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+    xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"
+    mc:Ignorable="w14 w15 w16se wp14"
+><w:body><w:p w:rsidR="00E86CBA" w:rsidRDefault="006D0117"><w:r><w:t
+                >Test data</w:t></w:r><w:bookmarkStart
+                w:id="0"
+                w:name="_GoBack"></w:bookmarkStart><w:bookmarkEnd
+                w:id="0"></w:bookmarkEnd></w:p><w:sectPr
+            w:rsidR="00E86CBA"
+        ><w:pgSz w:w="12240" w:h="15840"></w:pgSz><w:pgMar
+                w:top="1134"
+                w:right="850"
+                w:bottom="1134"
+                w:left="1701"
+                w:header="720"
+                w:footer="720"
+                w:gutter="0"></w:pgMar><w:cols w:space="720"></w:cols><w:docGrid
+                w:linePitch="360"></w:docGrid></w:sectPr></w:body></w:document>
+"
+`;

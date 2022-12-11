@@ -3,84 +3,143 @@ import {
     formatRawData,
     packArchive,
     unpackArchive,
-} from '../core';
-import { readConfig } from '../config';
-import inquirer from 'inquirer';
+} from '../core/index.js';
+import {
+    configToString,
+    mapConfigToPromises,
+    readConfig,
+} from '../config/index.js';
+
+import {ArgumentParser} from 'argparse';
+import {GitForArchivedData} from '../config/types.js';
+import fs from 'fs';
+import path from 'path';
+import {askToUserConfirm} from './utils.js';
+import {initializeDirectory} from "./initializer.js";
+
+const parser = new ArgumentParser({
+    description: 'Git for Archived Data',
+});
+
+const enum PackerActionType {
+    Pack = 'pack',
+    Unpack = 'unpack',
+    Watch = 'watch',
+    Initialize = 'init',
+}
+
+const packerActions: PackerActionType[] = [
+    PackerActionType.Pack,
+    PackerActionType.Unpack,
+    PackerActionType.Watch,
+    PackerActionType.Initialize,
+];
+
+parser.add_argument('-a', '--action', {
+    dest: 'action',
+    choices: packerActions as string[],
+    help: 'Archive action',
+    required: true,
+});
+
+parser.add_argument('-c', '--config', {
+    dest: 'config',
+    default: 'git-for-archived-data.json',
+    help: 'Configuration path',
+    required: false,
+});
+
+interface CliArguments {
+    action: PackerActionType;
+    config: string;
+}
+
+type ActionFunction = (this: void, config: GitForArchivedData) => void;
+const actionFunctions: Record<PackerActionType, ActionFunction> = {
+    [PackerActionType.Unpack]: async config => {
+        const promises = mapConfigToPromises(config, async item => {
+            const archivePath = path.resolve(item.archive.path);
+            const rawPath = path.resolve(item.raw.path);
+
+            await unpackArchive(archivePath, rawPath);
+
+            if (item.raw.applyPrettier) {
+                await formatRawData(rawPath, '.');
+            } else {
+                console.log('Skipped prettier');
+            }
+        });
+        return Promise.all(promises);
+    },
+
+    [PackerActionType.Pack]: async config => {
+        const userConfirmation = await askToUserConfirm();
+        if (!userConfirmation) {
+            console.error('\x1b[31m⛊\x1b[0m Aborted');
+            return;
+        }
+
+        const promises = mapConfigToPromises(config, async item => {
+            await packArchive(
+                item.raw.path,
+                item.archive.path,
+                item.archive.format as never,
+            );
+        });
+        return Promise.all(promises);
+    },
+
+    [PackerActionType.Watch]: async config => {
+        const rawPathsToWatch = config.items
+            .filter(it => it.archive.watching)
+            .map(it => path.resolve(it.archive.path));
+
+        if (rawPathsToWatch.length === 0) {
+            console.error('\x1b[31m⛊\x1b[0m Nothing to watch');
+            return;
+        }
+
+        console.log(
+            `Paths to watch: \n${rawPathsToWatch
+                .map(it => `- \x1b[34m${it}\x1b[0m`)
+                .join('\n')}`,
+        );
+
+        createWatcher(config);
+    },
+
+    [PackerActionType.Initialize]: async () => {
+        await initializeDirectory('.');
+        console.log(`\x1b[32m♦\x1b[0m ` + 'Initialized');
+    }
+};
+
+// TODO: resolve paths preliminary
 
 export async function parseArguments(args: string[]): Promise<void> {
-    console.log(args);
-    if (args.length != 1) {
-        console.error('Expected exactly one argument');
-        process.exit(1);
+    const parseArgs: CliArguments = parser.parse_args(args);
+
+    const configPath = path.resolve(parseArgs.config);
+    if (!fs.existsSync(configPath)) {
+        console.error(`\x1b[31m⛊\x1b[0m The config "${configPath}" not found`);
         return;
     }
 
-    if (args[0] == '--unpack') {
-        const config = readConfig('git-for-archived-data.json');
-        const promises: Promise<void>[] = [];
-        for (const item of config.items) {
-            promises.push(
-                (async () => {
-                    await unpackArchive(item.archive.path, item.raw.path);
-                    console.log('asdasd', item.raw.applyPrettier);
-                    if (item.raw.applyPrettier) {
-                        await formatRawData(item.raw.path, '.');
-                    } else {
-                        console.log('Skipped prettier');
-                    }
-                })(),
-            );
-        }
-
-        for (const promise of promises) {
-            await promise;
-        }
+    if (parseArgs.action === PackerActionType.Initialize) {
+        // Do not read config for initialization
+        await actionFunctions[parseArgs.action](null as never);
         return;
     }
 
-    if (args[0] == '--pack') {
-        const questions = [
-            {
-                type: 'boolean',
-                name: 'confirm',
-                message: 'Confirm? [y/n]',
-            },
-        ];
+    const config = readConfig(configPath);
+    console.log(configToString(config));
 
-        const data = (await inquirer.prompt(questions)) as {
-            confirm: boolean;
-        };
-
-        if (!data.confirm) {
-            console.error('No confirm. Exiting');
-            process.exit(1);
-        }
-
-        const config = readConfig('git-for-archived-data.json');
-        const promises: Promise<void>[] = [];
-        for (const item of config.items) {
-            promises.push(
-                packArchive(
-                    item.raw.path,
-                    item.archive.path,
-                    item.archive.format as never,
-                ),
-            );
-        }
-
-        for (const promise of promises) {
-            await promise;
-        }
+    const actionFunction = actionFunctions[parseArgs.action];
+    if (!actionFunction) {
+        console.error(`\x1b[31m⛊\x1b[0m Unknown action: "${parseArgs.action}"`);
         return;
     }
 
-    if (args[0] == '--watch') {
-        const config = readConfig('git-for-archived-data.json');
-        createWatcher(config);
-        return;
-    }
-
-    console.error(`Unknown argument: ${args[0]}`);
-    process.exit(1);
+    await actionFunction(config);
     return;
 }

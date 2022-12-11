@@ -1,13 +1,14 @@
 import chokidar from 'chokidar';
-import { GitForArchivedData, Item as ConfigItem } from '../config/types';
-import { unpackArchive } from './packer';
-import { formatRawData } from './prettier';
+import { GitForArchivedData, Item as ConfigItem } from '../config/types.js';
+import { unpackArchive } from './packer.js';
+import { formatRawData } from './prettier.js';
 
 interface WatcherContext {
     lastBuildTime: number;
 }
 
-const WATCHER_COOLDOWN = 1;
+// In milliseconds
+const WATCHER_COOLDOWN = 2000;
 
 async function listenerTemplate(
     path: string,
@@ -33,7 +34,8 @@ async function listenerTemplate(
         );
         return;
     }
-    await unpackArchive(config.raw.path, config.archive.path);
+    await unpackArchive(config.archive.path, config.raw.path);
+
     if (config.raw.applyPrettier) {
         await formatRawData(config.raw.path, '.prettierrc.json');
     }

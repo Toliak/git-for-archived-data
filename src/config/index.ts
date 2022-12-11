@@ -1,6 +1,6 @@
-import * as JSON5 from 'json5';
+import JSON5 from 'json5';
 import { Validator, ValidatorResult } from 'jsonschema';
-import { GitForArchivedData } from './types';
+import * as ConfigTypes from './types.js';
 import path from 'path';
 import * as fs from 'fs';
 
@@ -20,7 +20,7 @@ export function validateConfig(data: unknown): ValidatorResult {
     });
 }
 
-export function readConfig(filepath: string): GitForArchivedData {
+export function readConfig(filepath: string): ConfigTypes.GitForArchivedData {
     const content = fs.readFileSync(filepath, 'utf8');
     const metaArray = JSON5.parse(content);
 
@@ -37,4 +37,35 @@ export function readConfig(filepath: string): GitForArchivedData {
     }
 
     return metaArray;
+}
+
+export function mapConfigToPromises(
+    config: ConfigTypes.GitForArchivedData,
+    callback: (item: ConfigTypes.Item) => Promise<void>,
+): Promise<void>[] {
+    const promises: Promise<void>[] = [];
+    for (const item of config.items) {
+        promises.push(callback(item));
+    }
+
+    return promises;
+}
+
+export function configItemToString(item: ConfigTypes.Item): string {
+    const withWatcher = item.archive.watching ? ' (+watching)' : '';
+    const withPrettier = item.raw.applyPrettier ? '(+prettier)' : '';
+
+    return (
+        `Archive : "${item.archive.path}" (format: ${item.archive.format}) ${withWatcher}\n` +
+        `Raw     : "${item.raw.path}" ${withPrettier}`
+    );
+}
+
+export function configToString(config: ConfigTypes.GitForArchivedData): string {
+    const itemsAmount = config.items.length;
+    const configString = `Config: (${itemsAmount} items)`;
+
+    const itemsString = config.items.map(configItemToString).join('\n');
+
+    return `${configString}\n${itemsString}`;
 }
