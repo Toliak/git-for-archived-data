@@ -1,6 +1,6 @@
-import { packArchive, unpackArchive } from './packer';
-import { formatRawData } from './prettier';
-import createWatcher from './watcher';
+import { packArchive, unpackArchive } from './packer.js';
+import { formatRawData } from './prettier.js';
+import createWatcher from './watcher.js';
 
 export { unpackArchive, packArchive };
 export { formatRawData };

@@ -1,6 +1,6 @@
 import * as prettier from 'prettier';
 import fs from 'fs';
-import { glob } from 'glob';
+import glob from 'glob';
 import path from 'path';
 
 class PrettierError extends Error {}
@@ -27,7 +27,6 @@ async function formatRawDataFile(
         filepath: fullPath,
     });
     fs.writeFileSync(fullPath, result, { encoding: 'utf8' });
-    console.log(`Prettified file ${fullPath}`);
 }
 
 export async function formatRawData(
@@ -37,7 +36,8 @@ export async function formatRawData(
     const options = await prettier.resolveConfig(prettierConfigPath);
     if (!options) {
         console.error(
-            'Cannot find prettier config file' +
+            '\x1b[31m⛊\x1b[0m ' +
+                ' Cannot find prettier config file' +
                 '(Check .prettierrc.json file in the root of the project)',
         );
         throw new PrettierError();
@@ -45,6 +45,10 @@ export async function formatRawData(
 
     const fullPath = path.resolve(directoryPath);
     if (!fs.lstatSync(fullPath).isDirectory()) {
+        console.log(
+            `\x1b[32m♦\x1b[0m ` +
+                `Prettier applied to the file \x1b[34m${directoryPath}\x1b[0m`,
+        );
         return formatRawDataFile(fullPath, options);
     }
 
@@ -61,7 +65,9 @@ export async function formatRawData(
         promises.push(formatRawDataFile(fullFilePath, options));
     }
 
-    for (const promise of promises) {
-        await promise;
-    }
+    await Promise.all(promises);
+    console.log(
+        `\x1b[32m♦\x1b[0m ` +
+            `Prettier applied to the files in \x1b[34m${directoryPath}\x1b[0m`,
+    );
 }
