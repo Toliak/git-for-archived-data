@@ -65,18 +65,34 @@ describe('Case MS Office Word file unpack and pack', () => {
         await formatRawData(rawDirectoryPath, prettierConfigPath);
     });
 
+    // i hate the path slashes in windows and linux :(
     targetFileCheckTest(
-        path.join(rawDirectoryPath, 'word/_rels/document.xml.rels'),
+        path
+            .relative(
+                path.resolve('.'),
+                path.join(rawDirectoryPath, 'word/_rels/document.xml.rels'),
+            )
+            .replace(/\\/g, '/'),
         true,
         true,
     );
     targetFileCheckTest(
-        path.join(rawDirectoryPath, 'word/document.xml'),
+        path
+            .relative(
+                path.resolve('.'),
+                path.join(rawDirectoryPath, 'word/document.xml'),
+            )
+            .replace(/\\/g, '/'),
         true,
         true,
     );
     targetFileCheckTest(
-        path.join(rawDirectoryPath, '[Content_Types].xml'),
+        path
+            .relative(
+                path.resolve('.'),
+                path.join(rawDirectoryPath, '[Content_Types].xml'),
+            )
+            .replace(/\\/g, '/'),
         true,
         true,
     );

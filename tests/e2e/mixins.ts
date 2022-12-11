@@ -11,7 +11,7 @@ export function targetFileCheckTest(
     saveSnapshot?: boolean,
 ): void {
     it(
-        `The target file "${filepath}"` +
+        `The target file "${filepath}" ` +
             `${isExists ? 'exists' : 'does not exist'}`,
         async () => {
             const result = fs.existsSync(filepath);

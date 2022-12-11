@@ -2,16 +2,18 @@
 module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
-    testEnvironmentOptions: {
-        NODE_OPTIONS: '--experimental-vm-modules',
-    },
+
+    // Without this option,
+    // error `The 'import.meta' meta-property is only allowed when ...` reveals
     extensionsToTreatAsEsm: ['.ts'],
+
+    // No import resolution, otherwise
     moduleNameMapper: {
         '^(\\.{1,2}/.*)\\.js$': '$1',
     },
+
+    // Process infinitely run, if the option is not set
     transform: {
-        // '^.+\\.[tj]sx?$' to process js/ts with `ts-jest`
-        // '^.+\\.m?[tj]sx?$' to process js/ts/mjs/mts with `ts-jest`
         '^.+\\.tsx?$': [
             'ts-jest',
             {
