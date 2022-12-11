@@ -1,14 +1,18 @@
 import * as path from 'path';
 import { GitForArchivedData } from '../../../src/config/types.js';
 import { readConfig } from '../../../src/config/index.js';
-import { formatRawData, packArchive, unpackArchive } from '../../../src/core/index.js';
+import {
+    formatRawData,
+    packArchive,
+    unpackArchive,
+} from '../../../src/core/index.js';
 import {
     getDefaultConfigPath,
     removeDirectoryIfExists,
     targetDirectoryFilesLengthTest,
     targetFileCheckTest,
 } from '../mixins.js';
-import {fileURLToPath} from "url";
+import { fileURLToPath } from 'url';
 
 interface TestEnvContext {
     config: GitForArchivedData | null;

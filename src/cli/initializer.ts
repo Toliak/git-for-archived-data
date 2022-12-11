@@ -1,7 +1,7 @@
 // TODO: make the separated files
 
 import path from 'path';
-import {askToUserConfirm} from './utils.js';
+import { askToUserConfirm } from './utils.js';
 import fs from 'fs';
 
 const templateJSON = `{
@@ -45,15 +45,19 @@ const initializeFunctions: Record<string, InitializeFunctionType> = {
     },
     '.prettierrc': filePath => {
         fs.writeFileSync(filePath, templatePrettierRC, 'utf8');
-    }
-}
+    },
+};
 
 export async function initializeDirectory(dirPath: string) {
-    for (const [fileLocalPath, callback] of Object.entries(initializeFunctions)) {
+    for (const [fileLocalPath, callback] of Object.entries(
+        initializeFunctions,
+    )) {
         const fullPath = path.resolve(dirPath, fileLocalPath);
 
         if (fs.existsSync(fullPath)) {
-            console.log(`> \x1b[34m${fullPath}\x1b[0m already exists. Replace?`);
+            console.log(
+                `> \x1b[34m${fullPath}\x1b[0m already exists. Replace?`,
+            );
             const result = await askToUserConfirm();
             if (!result) {
                 console.log(`> Skipped \x1b[34m${fullPath}\x1b[0m`);
@@ -61,6 +65,6 @@ export async function initializeDirectory(dirPath: string) {
             }
         }
 
-        callback(fullPath)
+        callback(fullPath);
     }
 }

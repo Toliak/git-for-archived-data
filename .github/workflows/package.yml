@@ -13,10 +13,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Setup node 14
+            - name: Setup node 16
               uses: actions/setup-node@v3.5.1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
             - name: Cache Node files
               uses: actions/cache@v3.0.11
               env:
@@ -36,10 +36,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Setup node 14
+            - name: Setup node 16
               uses: actions/setup-node@v3.5.1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
             - name: Cache Node files
               uses: actions/cache@v3.0.11
               env:
@@ -59,10 +59,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Setup node 14
+            - name: Setup node 16
               uses: actions/setup-node@v3.5.1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
             - name: Cache Node files
               uses: actions/cache@v3.0.11
               env:
@@ -82,10 +82,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Setup node 14
+            - name: Setup node 16
               uses: actions/setup-node@v3.5.1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
             - name: Cache Node files
               uses: actions/cache@v3.0.11
               env:
@@ -105,10 +105,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Setup node 14
+            - name: Setup node 16
               uses: actions/setup-node@v3.5.1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
             - name: Cache Node files
               uses: actions/cache@v3.0.11
               env:
@@ -124,5 +124,5 @@ jobs:
                       ${{ runner.os }}-
             - run: npm install
             - run: |
-                npm run dev -- -h
-                npm run dev -- -a init
+                  npm run dev -- -h
+                  npm run dev -- -a init

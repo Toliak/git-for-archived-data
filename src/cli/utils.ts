@@ -1,4 +1,4 @@
-import inquirer, {QuestionCollection} from "inquirer";
+import inquirer, { QuestionCollection } from 'inquirer';
 
 export async function askToUserConfirm() {
     const questions: QuestionCollection = [

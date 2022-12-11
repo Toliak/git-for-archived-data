@@ -10,12 +10,12 @@ import {
     readConfig,
 } from '../config/index.js';
 
-import {ArgumentParser} from 'argparse';
-import {GitForArchivedData} from '../config/types.js';
+import { ArgumentParser } from 'argparse';
+import { GitForArchivedData } from '../config/types.js';
 import fs from 'fs';
 import path from 'path';
-import {askToUserConfirm} from './utils.js';
-import {initializeDirectory} from "./initializer.js";
+import { askToUserConfirm } from './utils.js';
+import { initializeDirectory } from './initializer.js';
 
 const parser = new ArgumentParser({
     description: 'Git for Archived Data',
@@ -111,7 +111,7 @@ const actionFunctions: Record<PackerActionType, ActionFunction> = {
     [PackerActionType.Initialize]: async () => {
         await initializeDirectory('.');
         console.log(`\x1b[32m♦\x1b[0m ` + 'Initialized');
-    }
+    },
 };
 
 // TODO: resolve paths preliminary

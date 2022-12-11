@@ -55,8 +55,9 @@ tracking the content of the archive.
 1. Run `npx git-archive-data -a init` to initialize the project.
 
 This step creates two files:
-- `git-for-archived-data.json` - the project configuration file;
-- `.prettierrc` - the configuration file for the code formatter.
+
+-   `git-for-archived-data.json` - the project configuration file;
+-   `.prettierrc` - the configuration file for the code formatter.
 
 Be careful with `xml*` flags in the `.prettierrc`.
 It can break the MS Office file if set up wrongly.
