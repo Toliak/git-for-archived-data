@@ -120,14 +120,14 @@ export async function parseArguments(args: string[]): Promise<void> {
     const parseArgs: CliArguments = parser.parse_args(args);
 
     const configPath = path.resolve(parseArgs.config);
-    if (!fs.existsSync(configPath)) {
-        console.error(`\x1b[31m⛊\x1b[0m The config "${configPath}" not found`);
-        return;
-    }
 
     if (parseArgs.action === PackerActionType.Initialize) {
         // Do not read config for initialization
         await actionFunctions[parseArgs.action](null as never);
+        return;
+    }
+    if (!fs.existsSync(configPath)) {
+        console.error(`\x1b[31m⛊\x1b[0m The config "${configPath}" not found`);
         return;
     }
 

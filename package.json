@@ -1,6 +1,6 @@
 {
     "name": "git-for-archived-data",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Utility that automates archive packing and unpacking for tracking the content of the archive",
     "main": "dist/index.js",
     "type": "module",
