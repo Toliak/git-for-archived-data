@@ -18,7 +18,7 @@ jobs:
               with:
                   node-version: 16.x
             - name: Cache Node files
-              uses: actions/cache@v3.3.1
+              uses: actions/cache@v3.3.2
               env:
                   cache-name: cache-node-modules
               with:
@@ -41,7 +41,7 @@ jobs:
               with:
                   node-version: 16.x
             - name: Cache Node files
-              uses: actions/cache@v3.3.1
+              uses: actions/cache@v3.3.2
               env:
                   cache-name: cache-node-modules
               with:
@@ -64,7 +64,7 @@ jobs:
               with:
                   node-version: 16.x
             - name: Cache Node files
-              uses: actions/cache@v3.3.1
+              uses: actions/cache@v3.3.2
               env:
                   cache-name: cache-node-modules
               with:
@@ -87,7 +87,7 @@ jobs:
               with:
                   node-version: 16.x
             - name: Cache Node files
-              uses: actions/cache@v3.3.1
+              uses: actions/cache@v3.3.2
               env:
                   cache-name: cache-node-modules
               with:
@@ -110,7 +110,7 @@ jobs:
               with:
                   node-version: 16.x
             - name: Cache Node files
-              uses: actions/cache@v3.3.1
+              uses: actions/cache@v3.3.2
               env:
                   cache-name: cache-node-modules
               with:
