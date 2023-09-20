@@ -1,6 +1,6 @@
 import * as prettier from 'prettier';
 import fs from 'fs';
-import glob from 'glob';
+import * as glob from 'glob';
 import path from 'path';
 
 class PrettierError extends Error {}
