@@ -18,7 +18,7 @@ async function formatRawDataFile(
     }
     if (!info.inferredParser) {
         console.log(`No parser found for ${fullPath}`);
-        return;
+        // return;
     }
 
     const source = fs.readFileSync(fullPath, { encoding: 'utf8' });
@@ -65,8 +65,33 @@ export async function formatRawData(
         promises.push(formatRawDataFile(fullFilePath, options));
     }
 
-    await Promise.all(promises);
-    console.log(
+    const results = await Promise.all(
+        promises.map(p =>
+            p
+                .then(v => ({
+                    success: true,
+                    value: v,
+                }))
+                .catch(e => ({ success: false, error: e })),
+        ),
+    );
+    const errors = results.filter<{ success: boolean; error: never }>(
+        (
+            result,
+        ): result is {
+            success: boolean;
+            error: never;
+        } => !result.success,
+    );
+
+    if (errors.length !== 0) {
+        console.error('There are failed files');
+        for (const error of errors) {
+            console.error(`Failed: ${error.error}`);
+        }
+    }
+
+    return console.log(
         `\x1b[32m♦\x1b[0m ` +
             `Prettier applied to the files in \x1b[34m${directoryPath}\x1b[0m`,
     );

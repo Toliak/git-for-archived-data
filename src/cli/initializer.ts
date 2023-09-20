@@ -32,6 +32,7 @@ const templatePrettierRC = `{
     "printWidth": 80,
     "semi": true,
 
+    "plugins": ["prettier-plugin-xml-msword"],
     "xmlWhitespaceSensitivity": "strict",
     "xmlSelfClosingSpace": true,
     "xmlExpandSelfClosingTags": true
