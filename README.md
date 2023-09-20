@@ -52,7 +52,7 @@ tracking the content of the archive.
 
 # How to use
 
-1. Run `npx git-archive-data -a init` to initialize the project.
+1. Run `npx git-for-archived-data -a init` to initialize the project.
 
 This step creates two files:
 
@@ -65,11 +65,11 @@ It can break the MS Office file if set up wrongly.
 
 2. Edit `git-for-archived-data.json` and configure archive files
 
-3. Run `npx git-archive-data -a unpack` to unpack the configured archives
+3. Run `npx git-for-archived-data -a unpack` to unpack the configured archives
 
-4. Run `npx git-archive-data -a pack` to pack the archives back
+4. Run `npx git-for-archived-data -a pack` to pack the archives back
 
-Also, watch mode `npx git-archive-data -a watch` can be used to automatically unpack and pack the archives.
+Also, watch mode `npx git-for-archived-data -a watch` can be used to automatically unpack and pack the archives.
 
 # Use-Cases
 
