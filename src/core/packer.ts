@@ -1,27 +1,24 @@
 import fs from 'fs';
-import { PullStream } from 'unzipper';
-import * as unzip from 'unzipper';
+import AdmZip from 'adm-zip';
 import archiver, { Format } from 'archiver';
 
 export async function unpackArchive(
     archivePath: string,
     rawPath: string,
 ): Promise<void> {
-    const pipe = fs.createReadStream(archivePath);
+    const zip = new AdmZip(archivePath);
 
     return new Promise<void>(function (resolve, reject) {
-        const unzipPipe: PullStream = pipe.pipe(
-            unzip.Extract({ path: rawPath }),
-        );
-        unzipPipe.on('error', err => {
-            console.error(
-                '\x1b[31m⛊\x1b[0m ' +
-                    '\x1b[31mError happen while unpacking into \x1b[34m${rawPath}\x1b[0m',
-            );
-            reject(err);
-        });
+        zip.extractAllToAsync(rawPath, false, false, error => {
+            if (error !== undefined) {
+                console.error(
+                    '\x1b[31m⛊\x1b[0m ' +
+                        '\x1b[31mError happen while unpacking into \x1b[34m${rawPath}\x1b[0m',
+                );
+                reject(error);
+                return;
+            }
 
-        unzipPipe.on('close', () => {
             console.log(
                 `\x1b[32m♦\x1b[0m Unpacking into \x1b[34m${rawPath}\x1b[0m complete\x1b[0m`,
             );
