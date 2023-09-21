@@ -6,6 +6,9 @@ export async function unpackArchive(
     archivePath: string,
     rawPath: string,
 ): Promise<void> {
+    if (!fs.existsSync(archivePath)) {
+        throw Error(`File ${archivePath} not found`);
+    }
     const zip = new AdmZip(archivePath);
 
     return new Promise<void>(function (resolve, reject) {

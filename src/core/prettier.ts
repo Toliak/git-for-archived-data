@@ -32,6 +32,7 @@ async function formatRawDataFile(
 export async function formatRawData(
     directoryPath: string,
     prettierConfigPath: string,
+    nodeModulesDir?: string,
 ): Promise<void> {
     const options = await prettier.resolveConfig(prettierConfigPath);
     if (!options) {
@@ -41,6 +42,33 @@ export async function formatRawData(
                 '(Check .prettierrc.json file in the root of the project)',
         );
         throw new PrettierError();
+    }
+
+    if (nodeModulesDir !== undefined && nodeModulesDir !== null) {
+        const prettierPluginPath = path.join(
+            nodeModulesDir,
+            'prettier-plugin-xml-msword',
+            'src',
+            'plugin.js',
+        );
+        if (fs.existsSync(prettierPluginPath)) {
+            if (options.plugins) {
+                console.log(`Add prettier plugin. Path: ${prettierPluginPath}`);
+                options.plugins.push(prettierPluginPath);
+            } else {
+                console.error(
+                    'Prettier plugin will not be add: no plugin options',
+                );
+            }
+        } else {
+            console.error(
+                `Prettier plugin will not be add: no ${prettierPluginPath} detected`,
+            );
+        }
+    } else {
+        console.error(
+            'Prettier plugin will not be add: no node_modules dir detected',
+        );
     }
 
     const fullPath = path.resolve(directoryPath);

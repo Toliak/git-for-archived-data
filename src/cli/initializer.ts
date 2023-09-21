@@ -23,30 +23,7 @@ const templateJSON = `{
 }
 `;
 
-const templatePrettierRC = `const path = require("path")
-const fs = require("fs")
-
-const xmlPlugin = path.resolve(
-    (function () {
-        const nodeModulesDir = path.resolve(fs.realpathSync(process.argv[1]), "..", "..", "..")
-        const probeModule = path.join(nodeModulesDir, "prettier-plugin-xml-msword")
-        const probeDevModule = path.join(
-            nodeModulesDir,
-            "git-for-archived-data/node_modules/prettier-plugin-xml-msword"
-        )
-        if (fs.existsSync(probeModule)) {
-            return probeModule;
-        }
-        if (fs.existsSync(probeDevModule)) {
-            return probeDevModule;
-        }
-    })(),
-    "src/plugin.js",
-)
-console.log("xml plugin path:", xmlPlugin)
-
-/** @type {import("prettier").Config} */
-module.exports = {
+const templatePrettierRC = `{
     "$schema": "https://json.schemastore.org/prettierrc",
     "arrowParens": "avoid",
     "singleQuote": true,
@@ -55,12 +32,11 @@ module.exports = {
     "printWidth": 80,
     "semi": true,
 
-    "plugins": [xmlPlugin],
+    "plugins": [],
     "xmlWhitespaceSensitivity": "strict",
     "xmlSelfClosingSpace": true,
     "xmlExpandSelfClosingTags": true
-};
-
+}
 `;
 
 type InitializeFunctionType = (filePath: string) => void;
@@ -68,7 +44,7 @@ const initializeFunctions: Record<string, InitializeFunctionType> = {
     'git-for-archived-data.json': filePath => {
         fs.writeFileSync(filePath, templateJSON, 'utf8');
     },
-    '.prettierrc.js': filePath => {
+    '.prettierrc': filePath => {
         fs.writeFileSync(filePath, templatePrettierRC, 'utf8');
     },
 };
