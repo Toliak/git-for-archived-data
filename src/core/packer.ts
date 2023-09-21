@@ -9,11 +9,11 @@ export async function unpackArchive(
     const zip = new AdmZip(archivePath);
 
     return new Promise<void>(function (resolve, reject) {
-        zip.extractAllToAsync(rawPath, false, false, error => {
+        zip.extractAllToAsync(rawPath, true, false, error => {
             if (error !== undefined) {
                 console.error(
                     '\x1b[31m⛊\x1b[0m ' +
-                        '\x1b[31mError happen while unpacking into \x1b[34m${rawPath}\x1b[0m',
+                        `\x1b[31mError happen while unpacking into \x1b[34m${rawPath}\x1b[0m`,
                 );
                 reject(error);
                 return;
